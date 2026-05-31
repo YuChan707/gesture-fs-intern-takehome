@@ -162,21 +162,14 @@ def main():
         # call ask_question with data, model llm, and questionn  
         response = ask_question(vector_store, llm, user_input)
         
-        # handle 'hints' or not rechable source access based of the context
-        no_info_answers = {"I don't have enough information to answer that."}
-        # set the 'source' variable
-        if response["answer"] in no_info_answers:
-            sources_display = ["No find right source"]
-        else:
-            sources_display = response["sources"]
+        answer = response["answer"]
+        sources = response['sources']
 
-        # Print the origin source
+        # always show retrieved sources so the user can read the context
         print("\n Sources:\n")
-        for src in sources_display:
+        for src in sources:
             print(f"  - {src}")
- 
-        # Print the answer, get from ask_question
-        print(f"\nAnswer: {response['answer']}\n")
+        print(f"\nAnswer: {answer}\n")
 
 
 if __name__ == "__main__":
