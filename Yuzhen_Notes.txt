@@ -8,11 +8,11 @@ build_knowledge_base(data_dir)                #extract/get data
                 v
     input("Your question: ")   
                 |
-                v                            yes
-user typed "quit"? / empty questionn -----------------> exit program
+                v                               yes
+    user typed "quit"? / empty questionn -----------------> exit program
                 |   no                             
                 v                              
- ask_question(vector_store, llm, input)       #call function      
+    ask_question(vector_store, llm, input)       #call function      
                 |                              
                 v                              
     print sources + answer                       
@@ -25,7 +25,7 @@ user typed "quit"? / empty questionn -----------------> exit program
             get_llm()                        #choose the model
                 |
                 v
-    send command  'python -m src.pipeline --query "[question]?"'
+    send command  'python -m src.pipeline --query "[input]"'
                 |                                
                 v                              
     ask_question(vector_store, llm, input)       #call function      
