@@ -1,19 +1,23 @@
 
-build_knowledge_base(data_dir) 
+build_knowledge_base(data_dir)                #extract/get data
                 |
                 v
-            get_llm() 
+            get_llm()                        #choose the model
                 |
                 v
     input("Your question: ")   
                 |
-                v                               yes
-user typed "quit"? / empty questionn -----------------> quite program
+                v                            yes
+user typed "quit"? / empty questionn -----------------> exit program
                 |   no                             
                 v                              
- ask_question(vector_store, llm, input)        
+ ask_question(vector_store, llm, input)       #call function      
                 |                              
                 v                              
     print sources + answer                       
 
-
+To Do:
+Error handling (empty input ✔️, missing files ❌)
+--query CLI argument for single-question mode ❌
+Additional test cases ❌
+Type hints ❌
