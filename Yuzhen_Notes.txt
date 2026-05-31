@@ -1,4 +1,5 @@
 
+NO query question
 build_knowledge_base(data_dir)                #extract/get data
                 |
                 v
@@ -16,8 +17,24 @@ user typed "quit"? / empty questionn -----------------> exit program
                 v                              
     print sources + answer                       
 
+
+query question
+build_knowledge_base(data_dir)                #extract/get data
+                |
+                v
+            get_llm()                        #choose the model
+                |
+                v
+    send command  'python -m src.pipeline --query "How much does the Growth package cost?"'
+                |                                
+                v                              
+ ask_question(vector_store, llm, input)       #call function      
+                |                              
+                v                              
+    print sources + answer  
+
 To Do:
-Error handling (empty input ✔️, missing files ❌)
---query CLI argument for single-question mode ❌
+Error handling (empty input ✔️, missing files ✔️)
+--query CLI argument for single-question mode ✔️
 Additional test cases ❌
-Type hints ❌
+Type hints ✔️ (return not source to find)
