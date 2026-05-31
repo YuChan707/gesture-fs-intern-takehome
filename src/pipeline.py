@@ -151,12 +151,8 @@ def main():
     while True:
         user_input = input("What is your question? \n\n - ").strip()
  
-        # declare quit command / typing to exit the program
-        if user_input.lower() == "quit":
-            break
-
-        # declare no input = exit the program
-        if not user_input:
+        # declare quit typing to exit the program and not input
+        if user_input.lower() == "quit" or not user_input:
             break
  
         # call ask_question with data, model llm, and questionn  
