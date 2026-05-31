@@ -1,0 +1,19 @@
+
+build_knowledge_base(data_dir) 
+                |
+                v
+            get_llm() 
+                |
+                v
+    input("Your question: ")   
+                |
+                v                               yes
+user typed "quit"? / empty questionn -----------------> quite program
+                |   no                             
+                v                              
+ ask_question(vector_store, llm, input)        
+                |                              
+                v                              
+    print sources + answer                       
+
+
