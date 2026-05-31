@@ -165,7 +165,7 @@ def main():
         answer = response["answer"]
         sources = response['sources']
 
-        # always show retrieved sources so the user can read the context
+        # retrieved sources 
         print("\n Sources:\n")
         for src in sources:
             print(f"  - {src}")
