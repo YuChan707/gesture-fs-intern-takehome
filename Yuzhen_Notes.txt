@@ -19,16 +19,16 @@ user typed "quit"? / empty questionn -----------------> exit program
 
 
 **query question**
-build_knowledge_base(data_dir)                #extract/get data
+    build_knowledge_base(data_dir)                #extract/get data
                 |
                 v
             get_llm()                        #choose the model
                 |
                 v
-    send command  'python -m src.pipeline --query "How much does the Growth package cost?"'
+    send command  'python -m src.pipeline --query "[question]?"'
                 |                                
                 v                              
- ask_question(vector_store, llm, input)       #call function      
+    ask_question(vector_store, llm, input)       #call function      
                 |                              
                 v                              
     print sources + answer  
