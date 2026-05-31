@@ -1,5 +1,5 @@
 
-NO query question
+**NO query question**
 build_knowledge_base(data_dir)                #extract/get data
                 |
                 v
@@ -18,7 +18,7 @@ user typed "quit"? / empty questionn -----------------> exit program
     print sources + answer                       
 
 
-query question
+**query question**
 build_knowledge_base(data_dir)                #extract/get data
                 |
                 v
