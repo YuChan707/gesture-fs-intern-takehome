@@ -149,7 +149,7 @@ def main():
 
     # looping
     while True:
-        user_input = input("What is your question? ").strip()
+        user_input = input("What is your question? \n\n - ").strip()
  
         # declare quit command / typing to exit the program
         if user_input.lower() == "quit":
