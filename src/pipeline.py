@@ -47,7 +47,6 @@ def get_llm():
 # ──────────────────────────────────────────────
 PROMPT_TEMPLATE = """You are a helpful assistant for a marketing agency. Use the following context to answer the client's question.
 If the answer is not in the context, say "I don't have enough information to answer that."
-If the answer is 'hints' or not a question (end by '?') in the context, say "I need a question".
 
 Context:
 {context}
@@ -164,10 +163,7 @@ def main():
         response = ask_question(vector_store, llm, user_input)
         
         # handle 'hints' or not rechable source access based of the context
-        no_info_answers = {
-            "I don't have enough information to answer that.",
-            "I need a question.",
-        }
+        no_info_answers = {"I don't have enough information to answer that."}
         # set the 'source' variable
         if response["answer"] in no_info_answers:
             sources_display = ["No find right source"]
