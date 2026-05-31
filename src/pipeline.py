@@ -59,6 +59,7 @@ Answer:"""
 # TODO 1: Implement ask_question
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 def ask_question(vector_store, llm, question: str) -> dict:
+
     """Retrieve relevant chunks and generate an answer.
 
     Steps:
@@ -81,7 +82,24 @@ def ask_question(vector_store, llm, question: str) -> dict:
             "sources" -> list[str]: the chunk texts that were retrieved
     """
     # TODO: implement this (~6-8 lines)
-    raise NotImplementedError("TODO 1: Implement ask_question")
+    # step 1 declare 3 chunks (600-900 tokens) per question
+    docs = vector_store.similarity_search(question, k=3)
+ 
+    # step 2 get the content text from each chunk and merge together
+    chunks = [doc.page_content for doc in docs]
+    context = "\n\n".join(chunks)
+ 
+    # step 3 prompt template return retrieved context and question
+    prompt = PROMPT_TEMPLATE.format(context=context, question=question)
+ 
+    # step 4 return the format text in result [{"generated_text": "..."}]
+    result = llm(prompt)
+
+    # show answer
+    return {
+        "answer": result[0]["generated_text"],
+        "sources": chunks,
+    }
 
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -103,7 +121,40 @@ def main():
     data_dir = os.path.join(os.path.dirname(__file__), "..", "data")
 
     # TODO: implement this (~10-12 lines)
-    raise NotImplementedError("TODO 2: Complete the interactive loop")
+    # raise NotImplementedError("TODO 2: Complete the interactive loop")
+
+    # load the files from locally data
+    vector_store = build_knowledge_base(data_dir)
+ 
+    # set the local LLM once
+    llm = get_llm()
+
+    # running the program
+    print("--- Agency Assistant ---\n")
+    print("Type 'quit' to exit.\n")
+
+    # looping
+    while True:
+        user_input = input("What is your question? ").strip()
+ 
+        # declare quit command / typing to exit the program
+        if user_input.lower() == "quit":
+            break
+
+        # declare no input = exit the program
+        if not user_input:
+            continue
+ 
+        # call ask_question with data, model llm, and questionn  
+        response = ask_question(vector_store, llm, user_input)
+ 
+        # Print the origin source
+        print("\n Sources:\n")
+        for src in response["sources"]:
+            print(f"  - {src}")
+ 
+        # Print the answer, get from ask_question
+        print(f"\nAnswer: {response['answer']}\n")
 
 
 if __name__ == "__main__":
