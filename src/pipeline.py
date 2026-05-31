@@ -165,9 +165,8 @@ def main():
         
         # handle 'hints' or not rechable source access based of the context
         no_info_answers = {
-            "I don't have enough information to answer that",
-            "I need a question",
-
+            "I don't have enough information to answer that.",
+            "I need a question.",
         }
         # set the 'source' variable
         if response["answer"] in no_info_answers:
