@@ -15,6 +15,7 @@ Useful docs:
 import os
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from src.knowledge_base import build_knowledge_base
+import argparse
 
 
 # ──────────────────────────────────────────────
@@ -46,6 +47,7 @@ def get_llm():
 # ──────────────────────────────────────────────
 PROMPT_TEMPLATE = """You are a helpful assistant for a marketing agency. Use the following context to answer the client's question.
 If the answer is not in the context, say "I don't have enough information to answer that."
+If the answer is 'hints' or not a question (end by '?') in the context, say "I need a question".
 
 Context:
 {context}
@@ -125,9 +127,22 @@ def main():
 
     # load the files from locally data
     vector_store = build_knowledge_base(data_dir)
+    if not vector_store:
+        return "No enough files"
  
     # set the local LLM once
     llm = get_llm()
+
+    # set --query
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--query", type=str, default=None, help="Single question mode")
+    args = parser.parse_args()
+
+    if args.query:
+        response = ask_question(vector_store, llm, args.query)
+        for src in response["sources"]:
+            print(f" - {src}")
+        return print(f"\nAnswer: {response['answer']}\n")
 
     # running the program
     print("--- Agency Assistant ---\n")
@@ -143,14 +158,26 @@ def main():
 
         # declare no input = exit the program
         if not user_input:
-            continue
+            break
  
         # call ask_question with data, model llm, and questionn  
         response = ask_question(vector_store, llm, user_input)
- 
+        
+        # handle 'hints' or not rechable source access based of the context
+        no_info_answers = {
+            "I don't have enough information to answer that",
+            "I need a question",
+
+        }
+        # set the 'source' variable
+        if response["answer"] in no_info_answers:
+            sources_display = ["No find right source"]
+        else:
+            sources_display = response["sources"]
+
         # Print the origin source
         print("\n Sources:\n")
-        for src in response["sources"]:
+        for src in sources_display:
             print(f"  - {src}")
  
         # Print the answer, get from ask_question
